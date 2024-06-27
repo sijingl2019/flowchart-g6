@@ -257,7 +257,564 @@ export default {
         // _t.bindShortcuts()
         // // 绑定unload
         // _t.bindUnload()
-    }
+    },
+    handleToolTrigger (info) {
+      alert(0)
+      console.log(info, 'bar button info')
+        // const _t = this
+        // //是否记录日志标识
+        // let isRecord = false
+        // switch (info.name) {
+        //   case 'undo':
+        //   case 'redo':
+        //   case 'clearLog': {
+        //     // 更新操作日志
+        //     _t.doUpdateLog({
+        //       action: info.name
+        //     })
+        //     if (['undo', 'redo'].includes(info.name)) {
+        //       const log = _t.$X.utils.storage.get('log', _t.$X.config.storage.prefix)
+        //       _t.$nextTick(function () {
+        //         if (log.list.length) {
+        //           if (log.current === 0) {
+        //             const data = log.list[0]
+        //             if (data === null) {
+        //               // 清除
+        //               _t.editor.clear()
+        //               _t.editor.paint()
+        //             } else {
+        //               // 渲染
+        //               _t.editor.read(data.content)
+        //               _t.editor.paint()
+        //               // 缩放到实际大小
+        //               _t.doZoom({
+        //                 name: 'actualSize'
+        //               })
+        //             }
+        //           } else {
+        //             const data = log.list[log.current]
+        //             // 渲染
+        //             _t.editor.read(data.content)
+        //             _t.editor.paint()
+        //             // 缩放到实际大小
+        //             _t.doZoom({
+        //               name: 'actualSize'
+        //             })
+        //           }
+        //         }
+        //       })
+        //       // 更新currentItem
+        //       _t.currentItem = []
+        //     }
+        //     break
+        //   }
+        //   case 'copy': {
+        //     // FIXME 目前只支持节点的复制，不支持边的复制，边只能通过拖拽生成
+        //     const data = _t.currentItem ? _t.currentItem.filter(item => item.type === 'node') : []
+        //     _t.clipboard = {
+        //       data,
+        //       count: 0
+        //     }
+        //     break
+        //   }
+        //   case 'paste': {
+        //     const data = _t.clipboard.data
+        //     _t.clipboard.count++
+        //     if (data.length) {
+        //       data.forEach((item, index) => {
+        //         const model = item.model
+        //         // 计算坐标，添加一定偏移量，防止重叠
+        //         let x = model.x + 10 * _t.clipboard.count
+        //         let y = model.y + 10 * _t.clipboard.count
+        //         // 如果通过右键菜单触发的，则获取触发菜单时的canvas坐标
+        //         if (info && info.context === 'ContextMenu' && info.data) {
+        //           if (info.data.hasOwnProperty('canvasX')) {
+        //             x = model.x + info.data.canvasX - data[0].model.x
+        //           }
+        //           if (info.data.hasOwnProperty('canvasY')) {
+        //             y = model.y + info.data.canvasY - data[0].model.y
+        //           }
+        //         }
+        //         const node = {
+        //           ...model,
+        //           id: G6Util.uniqueId(),
+        //           groupId: '',
+        //           x,
+        //           y
+        //         }
+        //         _t.editor.addItem('node', node)
+        //       })
+        //     }
+        //     break
+        //   }
+        //   case 'delete': {
+        //     // 删除逻辑
+        //     const nodes = []
+        //     _t.editor.getNodes().forEach(node => {
+        //       if (node.hasState('active')) {
+        //         isRecord = true
+        //         nodes.push(node)
+        //       }
+        //     })
+        //     nodes.forEach(node => {
+        //       _t.editor.removeItem(node)
+        //     })
+        //     _t.editor.getEdges().forEach(edge => {
+        //       if (edge.hasState('active')) {
+        //         isRecord = true
+        //         _t.editor.removeItem(edge)
+        //       }
+        //     })
+        //     // 更新currentItem
+        //     _t.currentItem = []
+        //     break
+        //   }
+        //   case 'zoom':
+        //   case 'zoomIn':
+        //   case 'zoomOut':
+        //   case 'actualSize': {
+        //     _t.doZoom(info)
+        //     break
+        //   }
+        //   case 'fit': {
+        //     _t.editor.fitView()
+        //     break
+        //   }
+        //   case 'preview': {
+        //     _t.doSetMode(info.name)
+        //     const previewData = {
+        //       type: info.data,
+        //       content: ''
+        //     }
+        //     if (info.data === 'image') {
+        //       previewData.content = _t.editor.toDataURL()
+        //     } else if (info.data === 'json') {
+        //       previewData.content = _t.editor.save()
+        //     }
+        //     // 显示预览弹窗
+        //     _t.$X.utils.bus.$emit('editor/previewModel/open', previewData)
+        //     break
+        //   }
+        //   case 'edit': {
+        //     _t.doSetMode(info.name)
+        //     break
+        //   }
+        //   case 'fill': {
+        //     _t.editor.$D.fill = info.data
+        //     _t.editor.getNodes().forEach(node => {
+        //       if (node.hasState('active')) {
+        //         isRecord = true
+        //         const { style } = node.getModel()
+        //         _t.editor.updateItem(node, {
+        //           style: {
+        //             ...style,
+        //             fill: info.data
+        //           }
+        //         })
+        //       }
+        //     })
+        //     break
+        //   }
+        //   case 'lineColor': {
+        //     _t.editor.$D.lineColor = info.data
+        //     // console.log('lineColor', info.data)
+        //     _t.editor.getEdges().forEach(edge => {
+        //       if (edge.hasState('active')) {
+        //         isRecord = true
+        //         const { style } = edge.getModel()
+        //         // console.log('edge style', style)
+        //         _t.editor.updateItem(edge, {
+        //           style: {
+        //             ...style,
+        //             stroke: info.data
+        //           }
+        //         })
+        //       }
+        //     })
+        //     _t.editor.getNodes().forEach(node => {
+        //       if (node.hasState('active')) {
+        //         isRecord = true
+        //         const { style } = node.getModel()
+        //         _t.editor.updateItem(node, {
+        //           style: {
+        //             ...style,
+        //             stroke: info.data
+        //           }
+        //         })
+        //       }
+        //     })
+        //     break
+        //   }
+        //   case 'lineWidth': {
+        //     _t.editor.$D.lineWidth = info.data
+        //     _t.editor.getEdges().forEach(edge => {
+        //       if (edge.hasState('active')) {
+        //         isRecord = true
+        //         const { style } = edge.getModel()
+        //         _t.editor.updateItem(edge, {
+        //           style: {
+        //             ...style,
+        //             lineWidth: info.data
+        //           }
+        //         })
+        //       }
+        //     })
+        //     _t.editor.getNodes().forEach(node => {
+        //       if (node.hasState('active')) {
+        //         isRecord = true
+        //         const { style } = node.getModel()
+        //         _t.editor.updateItem(node, {
+        //           style: {
+        //             ...style,
+        //             lineWidth: info.data
+        //           }
+        //         })
+        //       }
+        //     })
+        //     break
+        //   }
+        //   case 'lineDash': {
+        //     const edgeConfig = _t.editor.$C.edge
+        //     _t.editor.$D.lineDash = info.data
+        //     _t.editor.getEdges().forEach(edge => {
+        //       if (edge.hasState('active')) {
+        //         isRecord = true
+        //         const { style } = edge.getModel()
+        //         _t.editor.updateItem(edge, {
+        //           style: {
+        //             ...style,
+        //             ...edgeConfig.type[info.data]
+        //           }
+        //         })
+        //       }
+        //     })
+        //     _t.editor.getNodes().forEach(node => {
+        //       if (node.hasState('active')) {
+        //         isRecord = true
+        //         const { style } = node.getModel()
+        //         _t.editor.updateItem(node, {
+        //           style: {
+        //             ...style,
+        //             ...edgeConfig.type[info.data]
+        //           }
+        //         })
+        //       }
+        //     })
+        //     break
+        //   }
+        //   case 'lineType': {
+        //     _t.editor.$D.lineType = info.data
+        //     _t.editor.getEdges().forEach(edge => {
+        //       if (edge.hasState('active')) {
+        //         isRecord = true
+        //         _t.editor.updateItem(edge, {
+        //           type: info.data
+        //         })
+        //         _t.editor.refreshItem(edge)
+        //       }
+        //     })
+        //     break
+        //   }
+        //   case 'startArrow':
+        //   case 'endArrow': {
+        //     // console.log('info', info)
+        //     _t.editor.$D[info.name] = info.data
+        //     const handleArrowStyle = function (data, lineColor) {
+        //       if (!data) {
+        //         // FIXME return false 无法在updateItem时清除箭头，暂使用如下方式清除
+        //         return {
+        //           path: '',
+        //           d: 0,
+        //           fill: ''
+        //         }
+        //       }
+        //       const arrowStyle = data.style
+        //       // 处理箭头填充色
+        //       if (typeof arrowStyle === 'object' && data.fill) {
+        //         arrowStyle.fill = lineColor
+        //         arrowStyle.stroke = lineColor
+        //       }
+        //       // console.log('arrowStyle', arrowStyle, data, lineColor)
+        //       return arrowStyle
+        //     }
+        //     // 根据端点类型更新边
+        //     _t.editor.getEdges().forEach(edge => {
+        //       if (edge.hasState('active')) {
+        //         isRecord = true
+        //         const { style } = edge.getModel()
+        //         // console.log('style', style, info.name)
+        //         _t.editor.updateItem(edge, {
+        //           style: {
+        //             ...style,
+        //             [info.name]: handleArrowStyle(info.data, style.stroke)
+        //           }
+        //         })
+        //       }
+        //     })
+        //     break
+        //   }
+        //   case 'clear': {
+        //     _t.$Modal.confirm({
+        //       title: _t.$t('L10200'),
+        //       // 确认清空画布？
+        //       content: _t.$t('L10201'),
+        //       onOk: function () {
+        //         // 更新操作日志
+        //         _t.doUpdateLog({
+        //           action: 'clear'
+        //         })
+        //         _t.editor.clear()
+        //         _t.editor.paint()
+        //       }
+        //     })
+        //     // 更新currentItem
+        //     _t.currentItem = []
+        //     break
+        //   }
+        //   case 'toFront':
+        //   case 'toBack': {
+        //     if (Array.isArray(info.data)) {
+        //       info.data.forEach(data => {
+        //         if (data.hasOwnProperty('id') && data.id) {
+        //           isRecord = true
+        //           const item = _t.editor.findById(data.id)
+        //           if (item && item[info.name]) {
+        //             // 执行操作
+        //             item[info.name]()
+        //             _t.editor.paint()
+        //           }
+        //         }
+        //       })
+        //     }
+        //     break
+        //   }
+        //   case 'fullscreen': {
+        //     if (screenfull.enabled) {
+        //       screenfull.toggle()
+        //     }
+        //     break
+        //   }
+        //   case 'upload': {
+        //     _t.$Modal.confirm({
+        //       title: _t.$t('L10200'),
+        //       // 上传JSON数据将覆盖当前画布，确认上传？
+        //       content: _t.$t('L10206'),
+        //       onOk: function () {
+        //         // 打开文件选择窗口
+        //         const input = document.createElement('input')
+        //         input.type = 'file'
+        //         // 限定文件类型
+        //         input.accept = '.json'
+        //         input.click()
+        //         input.onchange = function () {
+        //           const file = input.files[0]
+        //           // FileReader实例
+        //           const reader = new FileReader()
+        //           // 读取文件
+        //           reader.readAsText(file, 'UTF-8')
+        //           // 处理数据
+        //           reader.onload = function (event) {
+        //             try {
+        //               const fileString = event.target.result
+        //               const fileJson = JSON.parse(fileString)
+        //               // 清空画布
+        //               _t.editor.clear()
+        //               // 更新currentItem
+        //               _t.currentItem = []
+        //               // 设置数据
+        //               _t.editor.data(fileJson)
+        //               // 渲染
+        //               _t.editor.render()
+        //               _t.editor.getNodes().forEach(node => {
+        //                 const model = node.getModel()
+        //                 const radian = model.radian
+        //                 const keyShape = node.getKeyShape()
+        //                 keyShape.resetMatrix()
+        //                 keyShape.rotate(radian)
+        //                 const group = _t.editor.get('group')
+        //                 // 更新shapeControl
+        //                 utils.shapeControl.rotate(model, group, radian)
+        //                 // 更新锚点
+        //                 utils.anchor.rotate(model, group, radian)
+        //               })
+        //               // 缩放到实际大小
+        //               _t.doZoom({
+        //                 name: 'actualSize'
+        //               })
+        //               // 加载数据后保存记录
+        //               // 更新操作日志
+        //               _t.doUpdateLog({
+        //                 action: 'loadData',
+        //                 data: {
+        //                   time: new Date(),
+        //                   content: _t.editor.save()
+        //                 }
+        //               })
+        //             } catch (e) {
+        //               // 提示
+        //               _t.$Message.error(_t.$t('L10207'))
+        //               console.error('XFC EDITOR ERROR:: upload JSON failed!', e)
+        //             }
+        //           }
+        //         }
+        //       }
+        //     })
+        //     break
+        //   }
+        //   case 'download': {
+        //     const fileName = _t.$X.utils.filters.formatDate(new Date(), 'YYYYMMDDhhmmss')
+        //     if (info.data === 'image') {
+        //       _t.editor.downloadImage(fileName)
+        //     } else if (info.data === 'json') {
+        //       let content = _t.editor.save()
+        //       content = JSON.stringify(content)
+        //       const blob = new Blob([content], {
+        //         type: 'application/json;charset=UTF-8'
+        //       })
+        //       const url = URL.createObjectURL(blob)
+        //       const link = document.createElement('a')
+        //       link.textContent = 'download json'
+        //       link.href = url
+        //       link.download = fileName
+        //       link.click()
+        //       // no longer need to read the blob so it's revoked
+        //       URL.revokeObjectURL(url)
+        //     }
+        //     break
+        //   }
+        //   case 'selectAll': {
+        //     const groupId = G6Util.uniqueId()
+        //     _t.editor.getNodes().forEach(node => {
+        //       // 更新节点
+        //       _t.editor.updateItem(node, {
+        //         groupId
+        //       })
+        //       _t.editor.setItemState(node, 'active', true)
+        //     })
+        //     break
+        //   }
+        //   case 'canvasBackground': {
+        //     switch (info.data) {
+        //       case 'default':
+        //         _t.editor.emit('background:reset')
+        //         break
+        //       case 'image':
+        //         // 打开文件选择窗口
+        //         const input = document.createElement('input')
+        //         input.type = 'file'
+        //         // 限定文件类型
+        //         input.accept = 'image/png, image/jpeg, image/jpg'
+        //         input.click()
+        //         input.onchange = function () {
+        //           const file = input.files[0]
+        //           // FileReader实例
+        //           const reader = new FileReader()
+        //           // 读取图片
+        //           if (file) {
+        //             reader.readAsDataURL(file)
+        //             // 处理数据
+        //             reader.onload = function (event) {
+        //               try {
+        //                 const imgFile = reader.result
+        //                 _t.editor.emit('background:update', imgFile)
+        //               } catch (e) {
+        //                 console.error('XFC EDITOR ERROR:: update background failed!', e)
+        //               }
+        //             }
+        //           }
+        //         }
+        //         break
+        //     }
+        //     break
+        //   }
+        //   case 'up':
+        //   case 'down':
+        //   case 'left':
+        //   case 'right': {
+        //     _t.editor.getNodes().forEach(node => {
+        //       if (node.hasState('active')) {
+        //         isRecord = true
+        //         const model = node.getModel()
+        //         const position = {
+        //           x: model.x,
+        //           y: model.y
+        //         }
+        //         switch (info.name) {
+        //           case 'up':
+        //             position.y--
+        //             break
+        //           case 'down':
+        //             position.y++
+        //             break
+        //           case 'left':
+        //             position.x--
+        //             break
+        //           case 'right':
+        //             position.x++
+        //             break
+        //         }
+        //         _t.editor.updateItem(node, position)
+        //       }
+        //     })
+        //     break
+        //   }
+        //   case 'layout': {
+        //     _t.editor.updateLayout(info.data)
+        //     break
+        //   }
+        //   case 'help': {
+        //     if (['aboutXFC', 'shortcutList'].includes(info.data)) {
+        //       const ref = _t.$refs[info.data]
+        //       if (ref && ref.show) {
+        //         ref.show()
+        //       }
+        //     }
+        //     break
+        //   }
+        //   case 'language': {
+        //     _t.$X.utils.storage.set('locale', info.data, _t.$X.config.storage.prefix)
+        //     _t.$i18n.locale = info.data
+        //     break
+        //   }
+        //   case 'history': {
+        //     const ref = _t.$refs[info.name]
+        //     if (ref && ref.show) {
+        //       ref.show()
+        //     }
+        //   }
+        // }
+        // if (isRecord) {
+        //   // 记录操作日志
+        //   _t.editor.emit('editor:record', 'handleToolTrigger')
+        // }
+        // if (info.type === 'dropdown-list') {
+        //   // 处理选中，更新toolList
+        //   const toolList = []
+        //   const toolListData = _t.$X.utils.storage.get('toolList', _t.$X.config.storage.prefix)
+        //   if (Array.isArray(toolListData)) {
+        //     toolListData.forEach(target => {
+        //       if (target.enableTool) {
+        //         if (target.name === info.name) {
+        //           target.selected = info.selected
+        //           // 更新自定义值
+        //           if (target.hasOwnProperty('custom')) {
+        //             target.custom = {
+        //               ...target.custom,
+        //               enable: false,
+        //               label: '',
+        //               data: ''
+        //             }
+        //           }
+        //         }
+        //         toolList.push(target)
+        //       }
+        //     })
+        //     _t.toolList = toolList
+        //     _t.$X.utils.storage.set('toolList', toolList, _t.$X.config.storage.prefix)
+        //   }
+        // }
+      }
+    
   },
   created() {
     console.log(this.$X.config, 'config')
@@ -265,6 +822,7 @@ export default {
     _t.$nextTick(() => {
       _t.init()
     })
+    _t.$X.utils.bus.$on('editor/tool/trigger', _t.handleToolTrigger)
   }
 }
 </script>

@@ -147,7 +147,7 @@
                 </div>
               </template>
               <template v-else>
-                <Dropdown trigger="click" @on-click="(val) => handleDropdownClick(item, type, index, val)">
+                <Dropdown trigger="click" @click="(val) => handleDropdownClick(item, type, index, val)">
                   <div style="margin: 0 3px;">
                     <template v-if="item.lockLabel">
                       <XIcon :iconfont="item.icon" :label="handleLabel(item)" style="vertical-align: middle;"></XIcon>
@@ -173,7 +173,7 @@
                     <Icon type="ios-arrow-down"></Icon>
                   </div>
                   <template v-slot:list>
-<DropdownMenu >
+                    <DropdownMenu >
                     <DropdownItem
                       v-for="(child, childIndex) in item.children"
                       :key="childIndex"
