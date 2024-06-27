@@ -1,0 +1,36 @@
+{
+  "author": "Kingo",
+  "license": "MIT",
+  "homepage": "https://github.com/OXOYO/X-Flowchart-Vue#readme",
+  "description": "A visual graph editor based on G6 and Vue.",
+  "name": "flowchart-g6",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
+  },
+  "dependencies": {
+    "@antv/g6": "^4.8.21",
+    "vue": "^3.4.29",
+    "vue-router": "^4.3.3",
+    "element-plus": "^2.3.7",
+    "mitt": "^3.0.1",
+    "vue-i18n": "^9.13.1",
+    "vue-pick-colors": "^1.6.5",
+    "screenfull": "^6.0.2",
+    "mousetrap": "^1.6.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.5",
+    "@vitejs/plugin-vue-jsx": "^4.0.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-vue": "^9.23.0",
+    "vite": "^5.3.1",
+    "less": "^4.1.3",
+    "less-loader": "^11.1.0"
+  }
+}
