@@ -9,11 +9,16 @@ import components from './global/components'
 import config from './config'
 import i18n from './i18n'
 import './assets/styles/main.less'
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 const app = createApp(App)
 
 app.use(router)
 app.use(ElementPlus)
+
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+    app.component(key, component)
+  }
 app.use(components)
 config.tools = config.tools(config.system)
 config.materials = config.materials()

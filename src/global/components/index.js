@@ -5,25 +5,26 @@
  */
 
 import {
-//   Menu,
-//   MenuItem,
-//   Tooltip,
-//   Divider,
-//   InputNumber,
-ElDropdown as Dropdown,
-ElDropdownMenu as DropdownMenu,
-ElDropdownItem as DropdownItem,
-ElIcon as Icon,
-//   Message,
-//   Modal,
-//   Input,
-//   Form,
-//   FormItem,
-//   Slider,
-//   Select,
-//   Option,
-//   Button,
-//   Table
+  ElMenu as Menu,
+  ElMenuItem as MenuItem,
+  ElTooltip as Tooltip,
+  ElDivider as Divider,
+  ElInputNumber as InputNumber,
+  ElDropdown as Dropdown,
+  ElDropdownMenu as DropdownMenu,
+  ElDropdownItem as DropdownItem,
+  ElIcon as Icon,
+  ElMessage as Message,
+  ElDialog as Modal,
+  ElInput as Input,
+  ElForm as Form,
+  ElFormItem as FormItem,
+  ElSlider as Slider,
+  ElSelect as Select,
+  ElOption as Option,
+  ElButton as Button,
+  ElTable as Table,
+  ElTableColumn as TableColumn
 } from 'element-plus'
 
 import PickColors from 'vue-pick-colors'
@@ -36,25 +37,26 @@ import XNoData from './NoData/Index.vue'
 
 const obj = {
   // ui组件
-  // Menu,
-  // MenuItem,
-  // Tooltip,
-  // Divider,
-  // InputNumber,
+  Menu,
+  MenuItem,
+  Tooltip,
+  Divider,
+  InputNumber,
   Dropdown,
   DropdownMenu,
   DropdownItem,
   Icon,
-  // Message,
-  // Modal,
-  // Input,
-  // Form,
-  // FormItem,
-  // Slider,
-  // Select,
-  // Option,
-  // Button,
-  // Table,
+  Message,
+  Modal,
+  Input,
+  Form,
+  FormItem,
+  Slider,
+  Select,
+  Option,
+  Button,
+  Table,
+  TableColumn,
   // 颜色选择器
   SketchPicker: PickColors,
   // 自定义组件
@@ -66,12 +68,13 @@ const obj = {
 }
 
 const components = {}
-components.install = function (Vue, options) {
+components.install = function (app, options) {
   for (const name in obj) {
     if (name && obj[name]) {
-      Vue.component(name, obj[name])
+      app.component(name, obj[name])
       if (['Message', 'Modal'].includes(name)) {
-        Vue.prototype[`$${name}`] = obj[name]
+        console.log(app.config.globalProperties)
+        app.config.globalProperties[`$${name}`] = obj[name]
       }
     }
   }

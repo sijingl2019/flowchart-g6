@@ -1,9 +1,5 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-// import HelloWorld from './components/HelloWorld.vue'
-function flowWindow(href) {
-  window.open(href,"_blank")
-}
 </script>
 
 <template>
@@ -13,10 +9,8 @@ function flowWindow(href) {
       class="el-menu-demo menu"
       mode="horizontal"
     >
-      <el-menu-item index="1"><RouterLink to="/">Home</RouterLink></el-menu-item>
-      <el-menu-item index="2"><RouterLink to="/about">About</RouterLink></el-menu-item>
-      <el-menu-item index="3"><RouterLink to="/login">User</RouterLink></el-menu-item>
-      <el-menu-item index="4"><RouterLink to="/flow">Flow</RouterLink></el-menu-item>
+      <el-menu-item index="1"><RouterLink to="/login">User</RouterLink></el-menu-item>
+      <el-menu-item index="2"><RouterLink to="/flow">Flow</RouterLink></el-menu-item>
     </el-menu>
     <RouterView /> 
   </div>

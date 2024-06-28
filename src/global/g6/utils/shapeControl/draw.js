@@ -5,6 +5,7 @@
  */
 
 import config from '../../config'
+import rotatePng from '@/assets/images/rotate.png'
 
 export default function (cfg, group) {
   const { id, width, height, shapeControl } = cfg
@@ -76,7 +77,7 @@ export default function (cfg, group) {
         width: rotateW,
         height: rotateH,
         cursor: 'crosshair',
-        img: require('@/assets/images/rotate.png'),
+        img: rotatePng,
         // 默认样式
         ...config.shapeControl.style.default.rotate
       }
