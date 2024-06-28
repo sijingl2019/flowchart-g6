@@ -8,6 +8,7 @@ import * as G6Util from '@antv/util'
 import * as G6DomUtil from '@antv/dom-util'
 import config from '../config'
 import utils from '../utils'
+import mouse from '@/global/utils/mouse'
 
 const TIME_FRAME = 200
 
@@ -208,7 +209,7 @@ export default {
     onCanvasMouseenter (event) {
       console.log('onCanvasMouseenter')
       const _t = this
-      if (_t.info && _t.info.type === 'dragNode') {
+      if (_t.info && _t.info.type === 'dragNode' && mouse.isLeftDown()) {
         _t[_t.info.type].createDottedNode.call(_t, event)
       }
     },
@@ -268,9 +269,9 @@ export default {
     },
     onMousemove (event) {
       const _t = this
-      console.log('onMousemove', _t.info)
       utils.common.throttle(function () {
         if (_t.info && _t.info.type && _t[_t.info.type].move) {
+          console.log('onMousemove', _t.info)
           _t[_t.info.type].move.call(_t, event)
         }
       }, TIME_FRAME)()
@@ -280,7 +281,7 @@ export default {
       console.log('onMouseup')
       if (_t.info) {
         if (_t.info.type) {
-          if (_t.info.type === 'dragNode' && _t.dragNode.status === 'dragNodeToEditor') {
+          if (_t.info.type === 'dragNode' && _t.dragNode.status === 'dragNodeToEditor' && mouse.isLeftDown()) {
             _t[_t.info.type].createNode.call(_t, event)
           }
           if (_t[_t.info.type].stop) {
@@ -724,7 +725,7 @@ export default {
       },
       move (event) {
         const _t = this
-        if (_t.dragNode.status === 'dragNodeToEditor') {
+        if (_t.dragNode.status === 'dragNodeToEditor' && mouse.isLeftDown()) {
           if (_t.dragNode.dottedNode && _t.info.node) {
             const { width, height } = _t.info.node
             _t.dragNode.dottedNode.attr({
@@ -752,8 +753,8 @@ export default {
               if (model.id === id) {
                 const attrs = {
                   // 处理点击移动 图形时的抖动
-                  x: x + event.originalEvent.movementX,
-                  y: y + event.originalEvent.movementY
+                  x: x + event.originalEvent.movementX/2,
+                  y: y + event.originalEvent.movementY/2
                 }
                 // 更新节点
                 _t.graph.updateItem(_t.info.node, attrs)
@@ -772,8 +773,8 @@ export default {
                 if (groupId && model.groupId && model.groupId === groupId) {
                   // 更新同组节点
                   _t.graph.updateItem(node, {
-                    x: model.x + event.originalEvent.movementX,
-                    y: model.y + event.originalEvent.movementY
+                    x: model.x + event.originalEvent.movementX/2,
+                    y: model.y + event.originalEvent.movementY/2
                   })
                 }
               }

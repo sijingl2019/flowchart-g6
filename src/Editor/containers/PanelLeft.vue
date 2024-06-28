@@ -17,29 +17,33 @@
 </style>
 
 <template>
-  <CardBox class="panel-left" placement="left" position="right" :width="250" :title="$t('L10300')" @expand="toggleHandler">
-    <CardItem
-      v-for="(item, index) in materials"
-      :key="index"
-      :title="$t(item.lang) || item.label"
-      :enableFold="true"
-      :bold="true"
-    >
-      <NodeElement
-        v-for="(child, childIndex) in item.children.filter(target => target.enable)"
-        :key="childIndex"
-        :title="child.label"
-        :info="child"
+  <div @mouseup="handleMouseUp">
+    <CardBox class="panel-left" placement="left" position="right" :width="250" :title="$t('L10300')"
+      @expand="toggleHandler">
+      <CardItem
+        v-for="(item, index) in materials"
+        :key="index"
+        :title="$t(item.lang) || item.label"
+        :enableFold="true"
+        :bold="true"
       >
-      </NodeElement>
-    </CardItem>
-  </CardBox>
+        <NodeElement
+          v-for="(child, childIndex) in item.children.filter(target => target.enable)"
+          :key="childIndex"
+          :title="child.label"
+          :info="child"
+        >
+        </NodeElement>
+      </CardItem>
+    </CardBox>
+  </div>
 </template>
 
 <script>
   import CardBox from '../components/CardBox.vue'
   import CardItem from '../components/CardItem.vue'
   import NodeElement from '../components/NodeElement.vue'
+  import mouse from '@/global/utils/mouse'
 
   export default {
     name: 'PanelLeft',
@@ -63,6 +67,9 @@
       toggleHandler (data) {
         const _t = this
         _t.$X.utils.bus.$emit('editor/panel/toggle', data)
+      },
+      handleMouseUp() {
+        mouse.up()
       }
     }
   }

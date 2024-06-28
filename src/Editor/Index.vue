@@ -22,17 +22,17 @@
   </div>
 </template>
 <script>
-import ToolBar from './containers/ToolBar.vue';
-import Sketchpad from './containers/Sketchpad.vue';
+  import ToolBar from './containers/ToolBar.vue';
+  import Sketchpad from './containers/Sketchpad.vue';
 
-import PanelLeft from './containers/PanelLeft.vue'
-import PanelRight from './containers/PanelRight.vue'
-// import PreviewModel from './containers/PreviewModel.vue'
-import ContextMenu from './containers/ContextMenu.vue'
-import AboutXFC from './containers/AboutXFC.vue'
-import ShortcutList from './containers/ShortcutList.vue'
-import History from './containers/History.vue'
-  import utils from '@/global/g6/utils'
+  import PanelLeft from './containers/PanelLeft.vue'
+  import PanelRight from './containers/PanelRight.vue'
+  // import PreviewModel from './containers/PreviewModel.vue'
+  import ContextMenu from './containers/ContextMenu.vue'
+  import AboutXFC from './containers/AboutXFC.vue'
+  import ShortcutList from './containers/ShortcutList.vue'
+  import History from './containers/History.vue'
+    import utils from '@/global/g6/utils'
   // 扩展了节点、边的G6
   import G6 from '@/global/g6/index'
   import * as G6Util from '@antv/util'

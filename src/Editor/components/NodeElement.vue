@@ -46,6 +46,7 @@
 </template>
 
 <script>
+  import mouse from '@/global/utils/mouse'
   export default {
     name: 'NodeElement',
     props: {
@@ -93,6 +94,7 @@
     methods: {
       handleMouseDown (event) {
         const _t = this
+        mouse.down()
         _t.$X.utils.bus.$emit('editor/add/node', _t.info)
       }
     }
